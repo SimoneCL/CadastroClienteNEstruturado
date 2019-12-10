@@ -1,0 +1,60 @@
+<po-page-list name="customerMaintList"
+    [p-title]="literals?.customerMaintList"
+    [p-disclaimer-group]="disclaimerGroup"
+    [p-filter]="filterSettings"
+    [p-breadcrumb]="breadcrumb"
+    [p-actions]="pageActions"
+    >
+
+<!--
+   
+    [p-disclaimer-group]="disclaimerGroup"
+    
+    
+-->
+
+
+    <po-table
+        p-checkbox="false"
+        p-striped="true"
+        [p-columns]="columns"
+        [p-items]="items"
+        [p-actions]="tableActions"
+        [p-show-more-disabled]="!hasNext"
+        (p-show-more)="search(true)">
+    </po-table>
+<!--
+     p-striped="true" fixo 
+      [p-items]="items" são os dados
+-->
+   
+</po-page-list>
+
+
+<po-modal #modalAdvanceSearch
+    p-size="sm"
+    [p-title]="literals?.modalAdvanceSearch"
+    [p-primary-action]="confirmAdvSearchAction"
+    [p-secondary-action]="cancelAdvSearchAction">
+
+    <div class="po-row">
+        <po-number class="po-md-6" name="codeInitial"
+            [(ngModel)]="filterCode.valInitial"
+            [p-label]="literals?.codeInitial"
+            [p-placeholder]="literals?.codeInitial"
+            p-minlength="1"
+            p-maxlength="9"
+            p-min="0">
+        </po-number>
+
+        <po-number class="po-md-6" name="codeFinal"
+            [(ngModel)]="filterCode.valFinal"
+            [p-label]="literals?.codeFinal"
+            [p-placeholder]="literals?.codeFinal"
+            p-minlength="1"
+            p-maxlength="9"
+            p-min="0"
+            p-required>
+        </po-number>  
+    </div>
+</po-modal>

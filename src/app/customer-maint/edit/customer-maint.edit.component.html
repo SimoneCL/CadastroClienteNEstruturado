@@ -1,0 +1,104 @@
+<po-page-edit name="customerMaintEdit"
+    [p-title]="getTitle()"
+    [p-breadcrumb]="breadcrumb"
+    >
+    <div class="po-row ">
+        
+        <po-number class="po-md-6" name="code"
+            [(ngModel)]="customer.code"
+            [p-label]="literals?.code"
+            [p-placeholder]="literals?.code"
+            p-maxlength="9"
+            p-minlength="1"
+            p-min="0"
+            p-required
+            [p-readonly]="isEdit">
+        </po-number>
+
+        <po-input class="po-md-3" name="shortName"
+            [(ngModel)]="customer.shortName"
+            [p-label]="literals?.shortName"
+            [p-placeholder]="literals?.shortName"
+            p-maxlength=15
+            p-clean
+            p-required>
+        </po-input>
+
+        <po-input class="po-md-6" name="name"
+            [(ngModel)]="customer.name"
+            [p-label]="literals?.name"
+            [p-placeholder]="literals?.name"
+            p-maxlength=40
+            p-clean>
+        </po-input>
+        <po-lookup class="po-md-6" name="country"
+            [(ngModel)]="customer.country"
+            [p-label]="literals?.country"
+            [p-placeholder]="literals?.country"
+            p-field-label="name"
+            p-field-value="code"
+            [p-columns]="zoomCountryColumns"
+            [p-field-format]="zoomCountryFormat"
+            [p-filter-service]="serviceCountry"
+            p-required>
+        </po-lookup>
+        <po-radio-group class="po-md-6" name="status"
+            [(ngModel)]="customer.status"
+            [p-label]="literals?.status"
+            [p-options]="statusOptions">
+        </po-radio-group>
+    </div>
+    <po-divider
+        [p-label]="literals?.contact" >
+    </po-divider>
+    <div class="po-row po-offset-lg-3 po-offset-xl-3 po-xl-12 po-lg-12 po-md-12 po-sm-12">
+        <po-button 
+           (p-click)="addContact()"
+            [p-label]="literals?.add"
+            p-type="primary" >
+        </po-button>
+    </div>
+    
+    <po-table class="po-offset-lg-3 po-offset-xl-3 po-xl-6 po-lg-6 po-md-6 po-sm-12"
+        p-checkbox="false"
+        p-striped="true"
+        [p-columns]="columns"
+        [p-items]="items"
+        [p-actions]="tableActions"
+            [p-show-more-disabled]="!hasNext">
+    </po-table>
+    
+    
+</po-page-edit>
+<po-modal #modalEdition
+    p-size="sm"
+    [p-title]="getTitleModal()"
+    [p-primary-action]="confirmAction"
+    [p-secondary-action]="cancelAction">
+
+    <po-number class="po-md-6" name="code"
+        [(ngModel)]="contact.code"
+        [p-label]="literals?.code"
+        [p-placeholder]="literals?.code"
+        p-maxlength=40
+        [p-readonly]="isEditContact"
+        p-clean>
+    </po-number>
+    <po-input class="po-md-6" name="name"
+        [(ngModel)]="contact.name"
+        [p-label]="literals?.name"
+        [p-placeholder]="literals?.name"
+        p-maxlength=40
+        p-clean>
+    </po-input>
+    <po-input class="po-md-12" name="fone"
+        [(ngModel)]="contact.fone"
+        [p-label]="literals?.fone"
+        [p-placeholder]="literals?.fone"
+        p-maxlength=40
+        p-clean>
+    </po-input>
+    
+</po-modal>
+
+
