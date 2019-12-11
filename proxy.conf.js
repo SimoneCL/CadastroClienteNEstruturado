@@ -5,7 +5,9 @@ const PROXY_CONFIG = [
             "/totvs-login",
             "/customer",
             "/country",
-            "/contact"
+            "/contact",
+            "/order",
+            "/orderLine"
         ],
         target: "http://localhost:3000",
         secure: false,

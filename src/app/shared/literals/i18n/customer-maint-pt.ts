@@ -4,6 +4,7 @@ export const customerMaintPt = {
     customerMaintEdit: 'Alteração de Cliente',
     customerMaintAdd: 'Inclusão de Cliente',
     modalEdition: 'Alteração Contato do Cliente',
+    customerDash: 'Pedidos do Cliente',
     code: 'Código',
     shortName: 'NomeAbrev',
     name: 'Nome',

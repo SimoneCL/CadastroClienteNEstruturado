@@ -16,11 +16,20 @@ import { generalPt } from './shared/literals/i18n/general-pt';
 import { customerMaintPt } from './shared/literals/i18n/customer-maint-pt';
 import { customerMaintEs } from './shared/literals/i18n/customer-maint-es';
 import { customerMaintEn } from './shared/literals/i18n/customer-maint-en';
+import { customerDashPt } from './shared/literals/i18n/customer-dash-pt';
+import { customerDashEn } from './shared/literals/i18n/customer-dash-en';
+import { customerDashEs } from './shared/literals/i18n/customer-dash-es';
 
 import { BreadcrumbControlService } from './shared/services/breadcrumb-control.service';
 import { CustomerService } from './shared/services/customer.service';
 import { CountryService } from './shared/services/country.service';
 import { ContactService } from './shared/services/contact.service';
+import { OrderLineService } from './shared/services/orderLine.service';
+import { OrderService } from './shared/services/order.service';
+
+
+
+
 
 const i18nConfig: PoI18nConfig = {
     default: {
@@ -41,6 +50,13 @@ const i18nConfig: PoI18nConfig = {
             'en-US': customerMaintEn,
             'en': customerMaintEn,
             'es': customerMaintEs
+        },
+        customerDash: {
+            'pt-BR': customerDashPt,
+            'pt': customerDashPt,
+            'en-US': customerDashEn,
+            'en': customerDashEn,
+            'es': customerDashEs
         }
     }
 };
@@ -52,7 +68,6 @@ const i18nConfig: PoI18nConfig = {
     entryComponents: [
     ],
     imports: [
-
         BrowserModule,
         PoModule,
         CommonModule,
@@ -65,7 +80,9 @@ const i18nConfig: PoI18nConfig = {
         BreadcrumbControlService,
         CustomerService,
         CountryService,
-        ContactService
+        ContactService,
+        OrderService,
+        OrderLineService
     ],
     bootstrap: [AppComponent]
 })

@@ -19,15 +19,13 @@
         p-striped="true"
         [p-columns]="columns"
         [p-items]="items"
-        [p-actions]="tableActions"
         [p-show-more-disabled]="!hasNext"
         (p-show-more)="search(true)">
     </po-table>
 <!--
-     p-striped="true" fixo 
-      [p-items]="items" são os dados
+    [p-actions]="tableActions"
+     [p-items]="items" são os dados
 -->
-   
 </po-page-list>
 
 
