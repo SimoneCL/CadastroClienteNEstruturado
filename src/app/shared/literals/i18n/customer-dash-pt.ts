@@ -10,6 +10,8 @@ export const customerDashPt = {
     seq: "Seq",
     item: "Item",
     quantity: "Quantidade",
-    valueTotItem: "Valor"
+    valueTotItem: "Valor",
+    name: "Nome",
+    country: "País"
 };
 

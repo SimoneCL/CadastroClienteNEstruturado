@@ -2,56 +2,50 @@
      [p-title]="literals?.orderCustomer"
      [p-breadcrumb]="breadcrumb"
      >
-
-<div class="thf-row">
-     <po-select 
-     class="po-sm-3"
-     name="customer"
-     [(ngModel)]="customer"
-     [p-label]="literals?.customer"
-     p-value="getCustomer()"
-     [p-options]="customerOptions">
-     
-     </po-select>
-
+    
+  <div class="po-row">
+      <po-select 
+      class="po-sm-3"
+      name="customer"
+      [(ngModel)]="customer"
+      [p-label]="literals?.customer"
+      p-value="getCustomer()"
+      [p-options]="customerOptions">
+      
+      </po-select>
+  </div>
   <po-divider p-label="" ></po-divider>
   <po-widget
     class="po-lg-3"
-    p-height="200"
+    p-height="300"
     [p-primary-label]="literals?.detail"
     [p-title]="literals?.infoCustomer"
-    >
+     >
 
     <po-info
       [p-label]="label"
       [p-value]="value">
     </po-info>
+    <po-info
+      [p-label]="literals?.name"
+      [p-value]="123">
+    </po-info>
+    <!--<po-info
+      [p-label]="literals?.country"
+      [p-value]="456">
+    </po-info>-->
   </po-widget>
-</div>
-<po-table class="po-xl-4 po-lg-4 po-md-6 po-sm-12"
-        p-checkbox="false"
-        p-striped="true"
-        [p-columns]="columns"
-        [p-items]="items"
-        [p-actions]="tableActions"
-        [p-show-more-disabled]="!hasNext"
-        (p-show-more)="search(true)">
-</po-table>
-<!--
 
-
-
-<div>
+ 
   
-</div>
-
-<po-divider p-label="" >
-</po-divider>
-
-
-<div>
--->
-
-
+  <po-table class="po-xl-4 po-lg-4 po-md-6 po-sm-12"
+          p-checkbox="false"
+          p-striped="true"
+          [p-columns]="columns"
+          [p-items]="items"
+          [p-actions]="tableActions"
+          [p-show-more-disabled]="!hasNext"
+          (p-show-more)="search(true)">
+  </po-table>
 </po-page-default>
   

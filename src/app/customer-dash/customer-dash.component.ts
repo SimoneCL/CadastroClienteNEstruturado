@@ -90,8 +90,9 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
       { property: 'date', label: this.literals['date'], type: 'date' },
       { property: 'value', label: this.literals['value'], type: 'currency' },
       { property: 'status', label: this.literals['status'], type: 'label', labels: this.statusLabelList },
-      {property: 'orderlines', label: 'Details', type: 'detail'
-      , detail: {
+      {
+        property: 'orderlines', label: 'Details', type: 'detail'
+        , detail: {
           columns: [
             { property: 'seq', label: 'Seq', type: 'number' },
             { property: 'item', label: 'Item', type: 'string' },
@@ -123,11 +124,11 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
         if (response && response.items) {
 
           this.itemsCustomer = response.items;
+
           for (let item of response.items.values()) {
             //O push vai carregar os valores no array customerOptions
             this.customerOptions.push({ label: item.code + ' - ' + item.shortName, value: item.code });
 
-            
           }
         }
 
