@@ -3,62 +3,64 @@ import { HttpClient } from '@angular/common/http';
 import { PoDisclaimer } from '@portinari/portinari-ui';
 import { Observable } from 'rxjs';
 import { TotvsResponse } from '../interfaces/totvs-response.interface';
-import { IContact, Contact } from '../model/contact.model';
+import { IOrderLine, OrderLine } from '../model/order-line.model';
+
+
 
 
 @Injectable()
-export class ContactService {
+export class OrderLineService {
 
     private headers = { headers: { 'X-Portinari-Screen-Lock': 'true' } };
 
-    // private apiBaseUrl = '/dts/datasul-rest/resources/prg/fin/v1/contact';
-    private apiBaseUrl = '/contact';
+    // private apiBaseUrl = '/dts/datasul-rest/resources/prg/fin/v1/orderline';
+    private apiBaseUrl = '/orderLine';
 
       private expandables = [''];
 
     constructor(private http: HttpClient) { }
 
-    query(filters: PoDisclaimer[], expandables: string[], page = 1, pageSize = 20): Observable<TotvsResponse<IContact>> {
+    query(filters: PoDisclaimer[], expandables: string[], page = 1, pageSize = 20): Observable<TotvsResponse<IOrderLine>> {
         const url = this.getUrl(this.apiBaseUrl, filters, expandables, page, pageSize);
 
-        return this.http.get<TotvsResponse<IContact>>(url, this.headers);
+        return this.http.get<TotvsResponse<IOrderLine>>(url, this.headers);
     }
 
-    getById(id: string, expandables: string[]): Observable<IContact> {
+    getById(id: string, expandables: string[]): Observable<IOrderLine> {
         let lstExpandables = this.getExpandables(expandables);
         if (lstExpandables !== '') { lstExpandables = `?${lstExpandables}`; }
 
-        return this.http.get<IContact>(`${this.apiBaseUrl}/${id}${lstExpandables}`, this.headers);
+        return this.http.get<IOrderLine>(`${this.apiBaseUrl}/${id}${lstExpandables}`, this.headers);
     }
     
 
-    getByIdCustomer(codeCustomer: string, expandables: string[]): Observable<TotvsResponse<IContact>> {
-         let lstExpandables = this.getExpandables(expandables);
+    getByIdCustomer(codeCustomer: string, expandables: string[]): Observable<TotvsResponse<IOrderLine>> {
+        let lstExpandables = this.getExpandables(expandables);
         console.log(lstExpandables)
         if (lstExpandables !== '') { lstExpandables = `?${lstExpandables}`; }
 console.log(this.apiBaseUrl)
-        return this.http.get<TotvsResponse<IContact>>(`${this.apiBaseUrl}${lstExpandables}?codeCustomer=${codeCustomer}`, this.headers);
+        return this.http.get<TotvsResponse<IOrderLine>>(`${this.apiBaseUrl}${lstExpandables}?codeCustomer=${codeCustomer}`, this.headers);
      }
 
-    getFilteredData(filter: string, page: number, pageSize: number): Observable<IContact> {
+    getFilteredData(filter: string, page: number, pageSize: number): Observable<IOrderLine> {
         const header = { params: { page: page.toString(), pageSize: pageSize.toString() } };
 
         if (filter && filter.length > 0) {
             header.params['code'] = filter;
         }
 
-        return this.http.get<IContact>(`${this.apiBaseUrl}`, header);
+        return this.http.get<IOrderLine>(`${this.apiBaseUrl}`, header);
     }
 
-    getObjectByValue(id: string): Observable<IContact> {
-        return this.http.get<IContact>(`${this.apiBaseUrl}/${id}`);
+    getObjectByValue(id: string): Observable<IOrderLine> {
+        return this.http.get<IOrderLine>(`${this.apiBaseUrl}/${id}`);
     }
-    create(model: IContact): Observable<IContact> {
-        return this.http.post<IContact>(this.apiBaseUrl, model, this.headers);
+    create(model: IOrderLine): Observable<IOrderLine> {
+        return this.http.post<IOrderLine>(this.apiBaseUrl, model, this.headers);
     }
 
-    update(model: IContact): Observable<IContact> {
-        return this.http.put<IContact>(`${this.apiBaseUrl}/${Contact.getInternalId(model)}`, model, this.headers);
+    update(model: IOrderLine): Observable<IOrderLine> {
+        return this.http.put<IOrderLine>(`${this.apiBaseUrl}/${OrderLine.getInternalId(model)}`, model, this.headers);
     }
 
     delete(id: string): Observable<Object> {

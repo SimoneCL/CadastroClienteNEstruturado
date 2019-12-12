@@ -12,6 +12,7 @@ import { IOrderLine } from './../shared/model/order-line.model';
 
 
 
+
 @Component({
   selector: 'app-customer-dash',
   templateUrl: './customer-dash.component.html',
@@ -24,6 +25,8 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
 
   itemsCustomer: Array<ICustomer> = new Array<ICustomer>();
   customerOptions: Array<PoSelectOption>;
+  selectCustomer = 0;
+  customer: ICustomer = new Customer();
 
   columns: Array<PoTableColumn>;
   tableActions: Array<PoTableAction>;
@@ -35,9 +38,7 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
   hasNext = false;
   currentPage = 1;
   pageSize = 20;
-  selectCustomer = 0;
-  customer: ICustomer = new Customer();
-
+  
 
 
 
@@ -67,6 +68,8 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
       this.breadcrumbControlService.addBreadcrumb(this.literals['orderCustomer'], this.activatedRoute);
       this.setupComponents();
       this.search();
+      console.log('vai chamar o getCustomer');
+      this.getCustomer();
 
     });
 
@@ -79,21 +82,18 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
     this.customerOptions = [];
 
     this.breadcrumb = this.breadcrumbControlService.getBreadcrumb();
-    console.log('setupComponents -breadcrumb' + this.breadcrumb);
-
-
-    this.getCustomer();
-
+    
     this.statusLabelList = Order.statusLabelList(this.literals);
 
 
+    console.log(this.statusLabelList);
     this.columns = [
       { property: 'numOrder', label: this.literals['numOrder'], type: 'number' },
       { property: 'date', label: this.literals['date'], type: 'date' },
       { property: 'value', label: this.literals['value'], type: 'currency' },
       { property: 'status', label: this.literals['status'], type: 'label', labels: this.statusLabelList },
       {
-        property: 'orderLines', label: 'Details', type: 'detail'
+        property: 'orderlines', label: 'Details', type: 'detail'
         , detail: {
           columns: [
             { property: 'seq', label: 'Seq', type: 'number' },
@@ -105,24 +105,28 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
         }
       }
     ];
-    this.tableActions = [];
+    
   }
-  onChangedCustomer() {
-    console.log('onChangedCustomer', this.selectCustomer , this.itemsCustomer);
-    this.customer = this.itemsCustomer.find(element => element.code === this.selectCustomer);
+  onChangeCustomer() {
+    
+    
+    console.log('onChangeCustomer');
+
   }
 
   getCustomer(): void {
 
+    
     this.servCustomerSubscription$ = this.serviceCustomer
       .query([], this.expandables)
       .subscribe((response: TotvsResponse<ICustomer>) => {
         if (response && response.items) {
 
           this.itemsCustomer = response.items;
-
+          console.log(this.itemsCustomer );
+          
           for (let item of response.items.values()) {
-            //O push vai carregar os valores no array customerOptions
+            // O push vai carregar os valores no array customerOptions
             this.customerOptions.push({ label: item.code + ' - ' + item.shortName, value: item.code });
 
           }
@@ -131,6 +135,7 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
       });
   }
   search(loadMore = false): void {
+    //console.log('searh');
     if (loadMore === true) {
       this.currentPage = this.currentPage + 1;
     } else {
@@ -141,7 +146,6 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
     this.servOrderSubscription$ = this.serviceOrder
       .query([], this.expandables, this.currentPage, this.pageSize)
       .subscribe((response: TotvsResponse<IOrder>) => {
-        console.log(response);
         if (response && response.items) {
           this.items = [...this.items, ...response.items];
           this.hasNext = response.hasNext;

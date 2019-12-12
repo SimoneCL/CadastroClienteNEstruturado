@@ -6,13 +6,11 @@
   <div class="po-row">
       <po-select 
       class="po-sm-3"
-      name="customer"
+      name="selectCustomer"
       [(ngModel)]="selectCustomer"
       [p-label]="literals?.customer"
-      p-value="getCustomer()"
       [p-options]="customerOptions"
-      (p-change)="onChangedCustomer()">
-      
+      (p-change)="onChangeCustomer()">
       </po-select>
   </div>
   <po-divider p-label="" ></po-divider>
@@ -22,20 +20,17 @@
     [p-primary-label]="literals?.detail"
     [p-title]="literals?.infoCustomer"
      >
+
+    <po-info
+      [p-label]="literals?.country"
+      [p-value]="teste">
+    </po-info>
     <po-info
       [p-label]="literals?.name"
-      [p-value]="customer.name">
+      [p-value]="123">
     </po-info>
-    <po-info
-      [p-label]="literals?.country" 
-      [p-value]="customer.country">
-    </po-info>
-    
   </po-widget>
-
- 
-  
-  <po-table class="po-xl-4 po-lg-4 po-md-6 po-sm-12"
+  <po-table class="po-xl-4 po-lg-4 po-md-8 po-sm-12"
           p-checkbox="false"
           p-striped="true"
           [p-columns]="columns"

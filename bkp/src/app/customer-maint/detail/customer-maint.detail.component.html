@@ -1,0 +1,52 @@
+<po-page-detail name="customerMaintDetail"
+    [p-title]="literals?.customerMaintDetail"
+    [p-breadcrumb]="breadcrumb"
+    >
+    <div class="po-row">
+        <po-input class="po-md-3" name="code"
+            [(ngModel)]="customer.code"
+            [p-label]="literals?.code"
+            p-readonly>
+        </po-input>
+
+        <po-input class="po-md-3" name="shortName"
+            [(ngModel)]="customer.shortName"
+            [p-label]="literals?.shortName"
+            p-readonly>
+        </po-input>
+
+        <po-input class="po-md-9" name="name"
+            [(ngModel)]="customer.name"
+            [p-label]="literals?.name"
+            p-readonly>
+        </po-input>
+
+        <po-input class="po-md-2" name="country"
+            [(ngModel)]="customer.country"
+            [p-label]="literals?.country"
+            [p-placeholder]="literals?.country"
+            p-maxlength=40
+            p-clean
+            p-readonly>
+        </po-input>
+        <po-radio-group class="po-md-6" name="status"
+            [(ngModel)]="customer.status"
+            [p-label]="literals?.status"
+            [p-options]="statusOptions"
+            p-disabled>
+        </po-radio-group>
+       
+    </div>
+    <po-divider
+        [p-label]="literals?.contact" >
+    </po-divider>
+    <po-table class="po-offset-lg-3 po-offset-xl-3 po-xl-6 po-lg-6 po-md-6 po-sm-6"
+        p-checkbox="false"
+        p-striped="true"
+        [p-columns]="columns"
+        [p-items]="items"
+        [p-show-more-disabled]="!hasNext">
+    </po-table>
+</po-page-detail>
+
+

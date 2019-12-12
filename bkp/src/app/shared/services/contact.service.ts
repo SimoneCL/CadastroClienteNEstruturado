@@ -33,7 +33,8 @@ export class ContactService {
     
 
     getByIdCustomer(codeCustomer: string, expandables: string[]): Observable<TotvsResponse<IContact>> {
-         let lstExpandables = this.getExpandables(expandables);
+       // this.getUrl(this.apiBaseUrl, String(codeCustomer), expandables, 1, 20);
+        let lstExpandables = this.getExpandables(expandables);
         console.log(lstExpandables)
         if (lstExpandables !== '') { lstExpandables = `?${lstExpandables}`; }
 console.log(this.apiBaseUrl)
