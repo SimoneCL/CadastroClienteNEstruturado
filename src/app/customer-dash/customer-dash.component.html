@@ -9,7 +9,6 @@
       name="customer"
       [(ngModel)]="selectCustomer"
       [p-label]="literals?.customer"
-      p-value="getCustomer()"
       [p-options]="customerOptions"
       (p-change)="onChangedCustomer()">
       
@@ -18,29 +17,29 @@
   <po-divider p-label="" ></po-divider>
   <po-widget
     class="po-lg-3"
-    p-height="300"
+    p-height="200"
     [p-primary-label]="literals?.detail"
     [p-title]="literals?.infoCustomer"
+    (p-primary-action)="getDetailCustomer()"
      >
     <po-info
+      [p-orientation]="orientation"
       [p-label]="literals?.name"
       [p-value]="customer.name">
     </po-info>
     <po-info
-      [p-label]="literals?.country" 
+      [p-orientation]="orientation"
+      [p-label]="literals?.country"  
       [p-value]="customer.country">
     </po-info>
     
   </po-widget>
 
- 
-  
-  <po-table class="po-xl-4 po-lg-4 po-md-6 po-sm-12"
+  <po-table class="po-xl-4 po-lg-8 po-md-6 po-sm-12"
           p-checkbox="false"
           p-striped="true"
           [p-columns]="columns"
           [p-items]="items"
-          [p-actions]="tableActions"
           [p-show-more-disabled]="!hasNext"
           (p-show-more)="search(true)">
   </po-table>

@@ -30,6 +30,15 @@ export class CustomerService {
         return this.http.get<ICustomer>(`${this.apiBaseUrl}/${id}${lstExpandables}`, this.headers);
     }
 
+    getByIdCustomer(codeCustomer: string, expandables: string[]): Observable<TotvsResponse<ICustomer>> {
+        // this.getUrl(this.apiBaseUrl, String(codeCustomer), expandables, 1, 20);
+         let lstExpandables = this.getExpandables(expandables);
+         console.log(lstExpandables)
+         if (lstExpandables !== '') { lstExpandables = `?${lstExpandables}`; }
+ console.log(this.apiBaseUrl)
+         return this.http.get<TotvsResponse<ICustomer>>(`${this.apiBaseUrl}${lstExpandables}?codeCustomer=${codeCustomer}`, this.headers);
+      }
+
     create(model: ICustomer): Observable<ICustomer> {
         return this.http.post<ICustomer>(this.apiBaseUrl, model, this.headers);
     }

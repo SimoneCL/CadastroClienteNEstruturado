@@ -12,6 +12,9 @@ export const customerDashPt = {
     quantity: "Quantidade",
     valueTotItem: "Valor",
     name: "Nome",
-    country: "País"
+    country: "País",
+    digit: "Em Digitação",
+    blok: "Bloqueado",
+    release: "Liberado"
 };
 

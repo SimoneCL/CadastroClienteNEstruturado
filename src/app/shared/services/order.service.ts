@@ -33,7 +33,7 @@ export class OrderService {
     }
     
 
-    getByIdCustomer(codeCustomer: string, expandables: string[]): Observable<TotvsResponse<IOrder>> {
+    getByIdOrderCustomer(codeCustomer: string, expandables: string[]): Observable<TotvsResponse<IOrder>> {
        // this.getUrl(this.apiBaseUrl, String(codeCustomer), expandables, 1, 20);
         let lstExpandables = this.getExpandables(expandables);
         console.log(lstExpandables)

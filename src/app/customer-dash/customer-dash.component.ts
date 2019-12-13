@@ -1,15 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PoBreadcrumb, PoI18nService, PoSelectOption, PoTableColumn, PoTableAction } from '@portinari/portinari-ui';
+import { PoBreadcrumb, PoI18nService, PoSelectOption, PoTableColumn, PoTableAction, PoInfoOrientation, PoRadioGroupOption } from '@portinari/portinari-ui';
 import { BreadcrumbControlService } from './../shared/services/breadcrumb-control.service';
 import { forkJoin, Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ICustomer, Customer } from '../shared/model/customer.model';
 import { CustomerService } from '../shared/services/customer.service';
 import { TotvsResponse } from '../shared/interfaces/totvs-response.interface';
 import { IOrder, Order } from '../shared/model/order.model';
 import { OrderService } from './../shared/services/order.service';
 import { IOrderLine } from './../shared/model/order-line.model';
-
 
 
 @Component({
@@ -30,6 +29,7 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
   items: Array<IOrder> = new Array<IOrder>();
   itemsOrderLine: Array<IOrderLine> = new Array<IOrderLine>();
 
+
   statusLabelList: Array<any>;
 
   hasNext = false;
@@ -37,6 +37,9 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
   pageSize = 20;
   selectCustomer = 0;
   customer: ICustomer = new Customer();
+
+  
+  orientation: PoInfoOrientation;
 
 
 
@@ -50,12 +53,13 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private serviceCustomer: CustomerService,
     private serviceOrder: OrderService,
+    private router: Router,
     private breadcrumbControlService: BreadcrumbControlService
   ) { }
 
+  
   ngOnInit(): void {
 
-    console.log('LOG', ' onINiti');
     forkJoin(
       this.PoI18nServices.getLiterals(),
       this.PoI18nServices.getLiterals({ context: 'customerDash' })
@@ -66,26 +70,20 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
 
       this.breadcrumbControlService.addBreadcrumb(this.literals['orderCustomer'], this.activatedRoute);
       this.setupComponents();
-      this.search();
-
+      
     });
-
-
   }
   ngOnDestroy(): void {
   }
 
   setupComponents(): void {
     this.customerOptions = [];
+    this.orientation = PoInfoOrientation.Horizontal;
 
     this.breadcrumb = this.breadcrumbControlService.getBreadcrumb();
-    console.log('setupComponents -breadcrumb' + this.breadcrumb);
-
-
     this.getCustomer();
 
     this.statusLabelList = Order.statusLabelList(this.literals);
-
 
     this.columns = [
       { property: 'numOrder', label: this.literals['numOrder'], type: 'number' },
@@ -105,18 +103,37 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
         }
       }
     ];
-    this.tableActions = [];
+      
   }
   onChangedCustomer() {
-    console.log('onChangedCustomer', this.selectCustomer , this.itemsCustomer);
+
     this.customer = this.itemsCustomer.find(element => element.code === this.selectCustomer);
+
+    this.searchOrder(String(this.customer.code));
   }
 
-  getCustomer(): void {
+  getDetailCustomer() {
+     this.router.navigate(['/customerMaint', 'detail', Customer.getInternalId(this.customer)]);
+  }
+  searchOrder(code: string): void {
+    this.items = [];
+    this.servOrderSubscription$ = this.serviceOrder
+      .getByIdOrderCustomer(code, this.expandables)
+      .subscribe((response: TotvsResponse<IOrder>) => {
+        if (response) {
+          this.items = response.items;
+        }
+      });
+  }
+
+
+  getCustomer() {
 
     this.servCustomerSubscription$ = this.serviceCustomer
       .query([], this.expandables)
       .subscribe((response: TotvsResponse<ICustomer>) => {
+        this.selectCustomer = response.items[0].code;
+        this.customer = response.items[0];
         if (response && response.items) {
 
           this.itemsCustomer = response.items;
@@ -127,6 +144,7 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
 
           }
         }
+        this.searchOrder(String(this.customer.code));
 
       });
   }
@@ -141,7 +159,6 @@ export class CustomerDashComponent implements OnInit, OnDestroy {
     this.servOrderSubscription$ = this.serviceOrder
       .query([], this.expandables, this.currentPage, this.pageSize)
       .subscribe((response: TotvsResponse<IOrder>) => {
-        console.log(response);
         if (response && response.items) {
           this.items = [...this.items, ...response.items];
           this.hasNext = response.hasNext;

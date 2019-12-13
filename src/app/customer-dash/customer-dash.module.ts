@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     CustomerDashComponent
+    
   ],
   imports: [
     CommonModule,

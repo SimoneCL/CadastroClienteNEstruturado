@@ -29,9 +29,9 @@ export class Order implements IOrder {
 
     static statusLabelList(literals: {}): Array<any> {
         return [
-            { value: 1, color: 'success', label: literals['active'] },
-            { value: 2, color: 'danger', label: literals['inactive'] },
-            { value: 3, color: 'color-09', label: literals['block'] }
+            { value: 1, color: 'success', label: literals['release'] },
+            { value: 2, color: 'danger', label: literals['digit'] },
+            { value: 3, color: 'color-08', label: literals['block'] }
         ];
     }
 
